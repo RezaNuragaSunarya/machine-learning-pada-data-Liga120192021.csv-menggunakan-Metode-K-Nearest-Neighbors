@@ -1,0 +1,30 @@
+# membaca file
+import pandas as pd
+from sklearn.neighbors import KNeighborsClassifier
+df = pd.read_csv('Liga120192021.csv')
+df.head()
+
+# klasifikasi = 2
+FEATURES = ['Pass1','Pass2','Pass3','Pass4','Pass5','Pass6','Pass7','Pass8','Pass9']
+x = df[FEATURES].copy()
+y = df['Pass10']
+
+knn = KNeighborsClassifier(n_neighbors=2)
+knn.fit(x, y)
+
+import pandas as pd
+new = pd.read_csv('new_Liga120192021.csv')
+new.head() 
+
+# predik pass
+import pandas as pd
+new['predict_pass'] = knn.predict(new[FEATURES])
+new.head()
+
+# scatterplot
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns  
+new['predict_pass'] = knn.predict(new[FEATURES])
+sns.scatterplot(new)
+plt.show()
